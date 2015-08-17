@@ -16,16 +16,30 @@ Vagrant.configure(2) do |config|
   # CUSTOMIZATION
    config.vm.provider "virtualbox" do |vb|
 
-     vb.name = "devspace"
+    vb.name = "devspace"
   
-     # Customize the amount of memory on the VM:
-     vb.memory = "1024"
-     vb.cpus = 1
+    # Customize the amount of memory on the VM:
+    vb.memory = "1024"
+    vb.cpus = 1
    end
 
 
   # PROVISION
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "Provisioning virtual machine..."
+    echo "=========================================="
+  SHELL
+
   config.vm.provision "shell", path: "vagrant/bootstrap.sh"
+
+  config.vm.provision "shell", path: "vagrant/lamp.sh"
+
+  config.vm.provision "shell", path: "vagrant/extra.sh"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "=========================================="
+    echo "Finished provisioning."
+  SHELL
 
   #SSH
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
