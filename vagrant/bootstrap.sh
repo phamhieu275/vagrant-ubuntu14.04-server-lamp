@@ -19,7 +19,7 @@ dpkg-reconfigure -f noninteractive locales > /dev/null 2>&1
 echo "Updating Ubuntu"
 apt-get update > /dev/null 2>&1
 echo "Upgrading Ubuntu"
-apt-get upgrade > /dev/nul
+apt-get upgrade > /dev/nul 2>&1
 
 # Base packages
 echo "Installing Base Packages"

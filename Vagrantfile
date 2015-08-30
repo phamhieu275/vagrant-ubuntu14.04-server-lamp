@@ -11,18 +11,20 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", ip: "192.168.33.10"
 
   # Setup synced folder
-    config.vm.synced_folder "www/", "/var/www/html", group: "www-data", owner: "vagrant", :mount_options => ['dmode=775', 'fmode=775']
+  config.vm.synced_folder "www/", "/var/www/html", group: "www-data", owner: "vagrant", :mount_options => ['dmode=775', 'fmode=775']
 
   # CUSTOMIZATION
-   config.vm.provider "virtualbox" do |vb|
+  config.vm.provider "virtualbox" do |vb|
 
     vb.name = "devspace"
   
     # Customize the amount of memory on the VM:
     vb.memory = "1024"
     vb.cpus = 1
-   end
+  end
 
+  # Avoids 'stdin: is not a tty' error.
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   # PROVISION
   config.vm.provision "shell", inline: <<-SHELL
@@ -41,17 +43,4 @@ Vagrant.configure(2) do |config|
     echo "Finished provisioning."
   SHELL
 
-  #SSH
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   sudo apt-get update
-  #   sudo apt-get install -y apache2
-  # SHELL
 end
