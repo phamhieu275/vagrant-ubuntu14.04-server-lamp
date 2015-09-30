@@ -4,14 +4,18 @@
 #    Other Packages    #
 ########################
 
-# Install Git
-echo "Installing Git"
-apt-get install git -y > /dev/null 2>&1 # this is required for Composer to install dependencies
-
 # Installing Composer
 echo "Installing Composer"
 curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
 mv composer.phar /usr/local/bin/composer > /dev/null 2>&1
+
+# Install Git
+echo "Installing Git"
+apt-get install git -y > /dev/null 2>&1
+
+# Installing PHPUnit
+echo "Installing PHPUnit"
+apt-get install phpunit -y > /dev/null 2>&1
 
 # Installing Node
 echo "Installing Node"

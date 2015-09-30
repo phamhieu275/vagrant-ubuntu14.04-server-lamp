@@ -4,5 +4,5 @@ pear channel-discover pecl.opendogs.org
 pear remote-list -c opendogs
 printf "no\n" | pecl install opendogs/mecab-beta
 echo "extension=mecab.so" | sudo tee /etc/php5/mods-available/mecab.ini
-hp5enmod mecab
+php5enmod mecab
 service apache2 restart
