@@ -136,8 +136,10 @@
 				<td>gd</td>
 				<td><i class="fa fa-<?php echo (function_exists('imagecreate') ? 'check' : 'remove'); ?>"></i></td>
 			</tr>
+
 			<tr>
-				<td col="2">including few more...</td>
+				<td>xDebug</td>
+				<td><i class="fa fa-<?php echo (function_exists('xdebug_get_code_coverage') ? 'check' : 'remove'); ?>"></i></td>
 			</tr>
 		</table>
 
@@ -160,6 +162,31 @@
 
 			<tr>
 				<td colspan="2"><em>Note: External access is enabled! Just use <strong><?php echo $_SERVER['SERVER_ADDR'] ?></strong> as host.</em></td>
+			</tr>
+		</table>
+
+		<h3>Extra tools</h3>
+		<table class="table table-striped">
+			<tr>
+				<td>Git</td>
+			</tr>
+			<tr>
+				<td>Composer</td>
+			</tr>
+			<tr>
+				<td>PHPUnit</td>
+			</tr>
+			<tr>
+				<td>Node</td>
+			</tr>
+			<tr>
+				<td>Bower</td>
+			</tr>
+			<tr>
+				<td>Gulp</td>
+			</tr>
+			<tr>
+				<td>Grunt</td>
 			</tr>
 		</table>
 	</div>

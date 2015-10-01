@@ -4,6 +4,10 @@
 #    Other Packages    #
 ########################
 
+# Installing PHPMyAdmin
+echo "Installing PHPMyAdmin"
+apt-get install phpmyadmin -y > /dev/null 2>&1
+
 # Installing Composer
 echo "Installing Composer"
 curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
@@ -29,5 +33,5 @@ npm install bower -g > /dev/null 2>&1
 echo "Installing Gulp"
 npm install gulp -g > /dev/null 2>&1
 
-echo "Installing Grunt"
-npm install grunt-cli -g > /dev/null 2>&1
+# echo "Installing Grunt"
+# npm install grunt-cli -g > /dev/null 2>&1
