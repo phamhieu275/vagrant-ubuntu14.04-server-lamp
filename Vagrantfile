@@ -1,46 +1,110 @@
+# Config
+hostname      = "devspace"
+server_ip     = "192.168.33.10"
+server_cpus   = "1"   # Cores
+server_memory = "1024" # MB
+
+server_timezone  = "UTC"
+
+# Database Configuration
+mysql_root_password   = "root"   # We'll assume user "root"
+mysql_version         = "5.5"    # Options: 5.5 | 5.6
+mysql_enable_remote   = "true"  # remote access enabled when true
+pgsql_root_password   = "root"   # We'll assume user "root"
+mongo_version         = "2.6"    # Options: 2.6 | 3.0
+mongo_enable_remote   = "true"  # remote access enabled when true
+
+# Languages and Packages
+php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
+php_version           = "5.6"    # Options: 5.5 | 5.6
+
+# To install HHVM instead of PHP, set this to "true"
+#hhvm                  = "false"
+
+# Default web server document root
+public_folder         = "/vagrant/project"
+
+nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
+nodejs_packages       = [          # List any global NodeJS packages that you want to install
+    #"grunt-cli",
+    #"gulp",
+    #"bower",
+    #"yo",
+]
 
 Vagrant.configure(2) do |config|
 
-  # Specify the base box
-  config.vm.box = "ubuntu/trusty64"
+    # Specify the base box
+    config.vm.box = "ubuntu/trusty64"
 
-  # Setup port forwarding
-  config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+    # Create a hostname, don't forget to put it to the `hosts` file
+    # This will point to the server's default virtual host
+    config.vm.hostname = hostname
 
-  # Setup network
-  config.vm.network "private_network", ip: "192.168.33.10"
+    # Create a forwarded port mapping which allows access to a specific port
+    # within the machine from a port on the host machine. In the example below,
+    # accessing "localhost:8080" will access port 80 on the guest machine.
+    config.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
 
-  # Setup synced folder
-  config.vm.synced_folder "www/", "/var/www/html", group: "www-data", owner: "vagrant", :mount_options => ['dmode=775', 'fmode=775']
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    config.vm.network :private_network, ip: server_ip
 
-  # CUSTOMIZATION
-  config.vm.provider "virtualbox" do |vb|
+    # Create a public network, which generally matched to bridged network.
+    # Bridged networks make the machine appear as another physical device on
+    # your network.
+    # config.vm.network :public_network
 
-    vb.name = "devspace"
-  
-    # Customize the amount of memory on the VM:
-    vb.memory = "1024"
-    vb.cpus = 1
-  end
+    # If true, then any SSH connections made will enable agent forwarding.
+    # Default value: false
+    config.ssh.forward_agent = true
 
-  # Avoids 'stdin: is not a tty' error.
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+    # Share an additional folder to the guest VM. The first argument is
+    # the path on the host to the actual folder. The second argument is
+    # the path on the guest to mount the folder. And the optional third
+    # argument is a set of non-required options.
+    config.vm.synced_folder "project", "/var/www/html", 
+        group: "www-data",
+        owner: "vagrant",
+        mount_options: ['dmode=775', 'fmode=664']
+    
+    # Replicate local .gitconfig file if it exists
+    if File.file?(File.expand_path("~/.gitconfig"))
+        config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
+    end
 
-  # PROVISION
-  config.vm.provision "shell", inline: <<-SHELL
-    echo "Provisioning virtual machine..."
-    echo "=========================================="
-  SHELL
+    # If using VirtualBox
+    config.vm.provider :virtualbox do |vb|
 
-  config.vm.provision "shell", path: "vagrant/bootstrap.sh"
+        vb.name = hostname
+    
+        # Set server cpus
+        vb.customize ["modifyvm", :id, "--cpus", server_cpus]
 
-  config.vm.provision "shell", path: "vagrant/lamp.sh"
+        # Set server memory
+        vb.customize ["modifyvm", :id, "--memory", server_memory]
+    end
 
-  config.vm.provision "shell", path: "vagrant/extra.sh"
+    # Avoids 'stdin: is not a tty' error.
+    config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
-  config.vm.provision "shell", inline: <<-SHELL
-    echo "=========================================="
-    echo "Finished provisioning."
-  SHELL
+    # PROVISION
+    config.vm.provision :shell, inline: "echo Provisioning virtual machine..."
 
+    # Provision Base Packages
+    config.vm.provision :shell, path: "shells/base.sh", args: [server_timezone]
+
+    # Provision PHP
+    config.vm.provision :shell, path: "shells/php.sh", args: [php_timezone, php_version]
+    
+    # Provision Apache
+    config.vm.provision :shell, path: "shells/apache.sh"
+
+    # Provision MySQL
+    config.vm.provision :shell, path: "shells/mysql.sh", args: [mysql_root_password, mysql_enable_remote]
+    
+    # Provision Extra Package
+    config.vm.provision :shell, path: "shells/extra.sh"
+
+    config.vm.provision :shell, inline: "echo Finished provisioning."
 end

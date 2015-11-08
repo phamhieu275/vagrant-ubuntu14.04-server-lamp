@@ -60,7 +60,7 @@ apt-get install php5-memcached php5-memcache php5-json -y > /dev/null 2>&1
 # Enable php5-mcrypt mode
 php5enmod mcrypt > /dev/null 2>&1
 
-# Turn on display errorÏ
+# Turn on display error
 sed -i "s/display_startup_errors = Off/display_startup_errors = On/g" ${php_config_file} > /dev/null 2>&1
 sed -i "s/display_errors = Off/display_errors = On/g" ${php_config_file} > /dev/null 2>&1
 sed -i "s/error_reporting = E_ALL & ~E_DEPRECATED/error_reporting = E_ALL | E_STRICT/g" ${php_config_file} > /dev/null 2>&1
