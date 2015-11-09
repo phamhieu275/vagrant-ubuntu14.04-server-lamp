@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-MYSQL_ROOT_PASS="root"
-PHPMYADMIN_PASS="root"
+MYSQL_ROOT_PASS=${1:-root} # default = root
+PHPMYADMIN_PASS=${2:-root} # default = root
 
 echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections > /dev/null 2>&1
 echo "phpmyadmin phpmyadmin/mysql/admin-user string root" | debconf-set-selections > /dev/null 2>&1

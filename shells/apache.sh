@@ -23,4 +23,8 @@ if [ -f $DIR_FILE ]; then
     sed -i "s/DirectoryIndex/DirectoryIndex index.php/g" $DIR_FILE > /dev/null 2>&1
 fi
 
+# Setting SSL for default site
+apt-get install ssl-cert -y > /dev/null 2>&1
+a2ensite default-ssl > /dev/null 2>&1
+
 service apache2 restart

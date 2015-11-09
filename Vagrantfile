@@ -7,30 +7,12 @@ server_memory = "1024" # MB
 server_timezone  = "UTC"
 
 # Database Configuration
-mysql_root_password   = "root"   # We'll assume user "root"
-mysql_version         = "5.5"    # Options: 5.5 | 5.6
-mysql_enable_remote   = "true"  # remote access enabled when true
-pgsql_root_password   = "root"   # We'll assume user "root"
-mongo_version         = "2.6"    # Options: 2.6 | 3.0
-mongo_enable_remote   = "true"  # remote access enabled when true
+mysql_root_password = "root"   # We'll assume user "root"
+mysql_enable_remote = "true"  # remote access enabled when true
+phpmyadmin_password = "root"
 
 # Languages and Packages
-php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
-php_version           = "5.6"    # Options: 5.5 | 5.6
-
-# To install HHVM instead of PHP, set this to "true"
-#hhvm                  = "false"
-
-# Default web server document root
-public_folder         = "/vagrant/project"
-
-nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
-nodejs_packages       = [          # List any global NodeJS packages that you want to install
-    #"grunt-cli",
-    #"gulp",
-    #"bower",
-    #"yo",
-]
+php_timezone = "UTC"    # http://php.net/manual/en/timezones.php
 
 Vagrant.configure(2) do |config|
 
@@ -95,13 +77,16 @@ Vagrant.configure(2) do |config|
     config.vm.provision :shell, path: "shells/base.sh", args: [server_timezone]
 
     # Provision PHP
-    config.vm.provision :shell, path: "shells/php.sh", args: [php_timezone, php_version]
+    config.vm.provision :shell, path: "shells/php.sh", args: [php_timezone]
     
     # Provision Apache
     config.vm.provision :shell, path: "shells/apache.sh"
 
     # Provision MySQL
     config.vm.provision :shell, path: "shells/mysql.sh", args: [mysql_root_password, mysql_enable_remote]
+
+    # Provision PHPMyAdmin
+    config.vm.provision :shell, path: "shells/phpmyadmin.sh", args: [mysql_root_password, phpmyadmin_password]
     
     # Provision Extra Package
     config.vm.provision :shell, path: "shells/extra.sh"

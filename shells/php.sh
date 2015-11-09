@@ -7,15 +7,6 @@
 export LANG=C.UTF-8
 
 PHP_TIMEZONE=${1:-UTC}
-PHP_VERSION=${2:-5.5}
-
-if [ $PHP_VERSION = "5.6" ]; then
-    # Add repo for PHP 5.6
-    add-apt-repository -y ppa:ondrej/php5-5.6
-
-    echo "Updating Ubuntu"
-    apt-get update > /dev/null 2>&1
-fi
 
 # Install php5
 echo "Installing PHP $PHP_VERSION"

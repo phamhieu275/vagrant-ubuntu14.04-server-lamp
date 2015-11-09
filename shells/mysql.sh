@@ -29,7 +29,7 @@ if [ $MYSQL_ENABLE_REMOTE = "true" ]; then
     sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
     # adding grant privileges to mysql root user from everywhere
-    mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY '$$MYSQL_ROOT_PASSWORD';"
+    mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
     mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "FLUSH PRIVILEGES;"
 
     service mysql restart
