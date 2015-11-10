@@ -47,7 +47,7 @@ Start the VM
     $ cd /devspace
     $ vagrant up
 
-First time of your 'vagrant up' will provision the vagrant. You can see the status of your VM from [http://192.168.33.10](http://192.168.33.10) or [https://192.168.33.10](https://192.168.33.10)
+First time of your 'vagrant up' will provision the vagrant. You can see the status of your VM from [http://192.168.33.10](http://192.168.33.10) or [https://192.168.33.10](https://192.168.33.10).
 You can check the `phpinfo` from  [http://192.168.33.10/phpinfo.php](http://192.168.33.10/phpinfo.php)
 
 ### Requirements
