@@ -18,6 +18,7 @@ This vagrant box is configured to use '1024mb' of RAM and 1 Cpu. You can change 
 - Apache 2
 - PHP _v5.6.7_ with mysql, mcrypt, memcached, memcache, sqlite, xmlrpc, geoip gd, xdebug, php5-fpm, php5-common
 - MySQL _v5.5.41_
+- PHPMyAdmin
 - Git _v1.9.1_
 - Node _v0.10.38_
 - Composer _v1.0.0-alpha9_
@@ -46,7 +47,7 @@ Start the VM
     $ cd /devspace
     $ vagrant up
 
-First time of your 'vagrant up' will provision the vagrant. You can see the status of your VM from [http://192.168.33.10](http://192.168.33.10).
+First time of your 'vagrant up' will provision the vagrant. You can see the status of your VM from [http://192.168.33.10](http://192.168.33.10) or [https://192.168.33.10](https://192.168.33.10)
 You can check the `phpinfo` from  [http://192.168.33.10/phpinfo.php](http://192.168.33.10/phpinfo.php)
 
 ### Requirements
