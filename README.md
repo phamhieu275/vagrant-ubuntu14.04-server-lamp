@@ -70,6 +70,10 @@ These are credentials setup by default.
 - Host: localhost
 - Port: 3306
 
+## PHPMyAdmin
+- URL: 192.168.33.10/phpmyadmin
+- Username: root
+- Password: root
  
 ### Disclaimer
 This vagrantfile and provision is only tested in Mac.
